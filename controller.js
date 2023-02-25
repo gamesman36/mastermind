@@ -1,44 +1,30 @@
-function reset() {
-    coloursLeft = 4;
-    guess.length = 0;
-    result.blackPegs = 0;
-    result.whitePegs = 0;
-    view();
-}
-
 generateSecretCode();
-function generateSecretCode() {
+function generateSecretCode(){
     const code = [];
     for (let i = 0; i < 4; i++) {
-        const randomIndex = Math.floor(Math.random() * colors.length);
-        code.push(colors[randomIndex]);
+        const randomIndex = Math.floor(Math.random() * colours.length);
+        code.push(colours[randomIndex]);
     }
     secretCode = code;
 }
 
-function clickBtn(colour) {
-    coloursLeft--;
+function addColour(colour) {
     clicks++;
-    guess.push(colour);
-
-    if (guess.length == 4) {
+    selectedColours.push(colour);
+    appView();
+    if(clicks % 4 == 0) {
         attemptsLeft--;
+        appView();
+        const guess = selectedColours.slice(Math.max(selectedColours.length - 4, 0));
         checkGuess(guess, secretCode);
-        pegString = `${result.blackPegs} black ${result.whitePegs} white`;
-        clickedBtns += `${colour} <b>(${pegString})</b><br />`;
-        reset();
-        return;
-    }
-
-    if (clicks % 4 == 1) {
-        clickedBtns += "<br />";
-    }
-
-    clickedBtns += `${colour} `;
-    view();
+        pegsView();
+    } 
 }
 
 function checkGuess(guess, secretCode) {
+
+    result.blackPegs = 0;
+    result.whitePegs = 0;
 
     if (JSON.stringify(guess) === JSON.stringify(secretCode)) {
         alert("You guessed the code!");

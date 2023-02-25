@@ -1,13 +1,10 @@
 const app = document.getElementById("app");
-const colors = ["red", "green", "blue", "yellow", "purple", "orange"];
+const pegs = document.getElementById("pegs");
 
-let secretCode = "";
-let playerGuess = "";
-let clickedBtns = "";
+let colours = ["red", "green", "blue", "yellow", "purple", "orange"];
+let selectedColours = [];
+let secretCode = [];
 let clicks = 0;
-let coloursLeft = 4;
-let guess = [];
-let pegString = "";
 let attemptsLeft = 12;
 
 let result = {

@@ -1,5 +1,6 @@
 body {
-    text-align: center;
+    background-color: darkgray;
+    color: black;
 }
 
 button {
@@ -7,6 +8,13 @@ button {
     width: 75px;
     font-weight: bold;
 }
+
+.dot {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+  }
 
 #red {
     background-color: red;
@@ -30,4 +38,12 @@ button {
 
 #orange {
     background-color: orange;
+}
+
+#black {
+    background-color: black;
+}
+
+#white {
+    background-color: white;
 }
