@@ -9,7 +9,7 @@ function pegsView(){
 function displayPegs() {
     let output = "";
     
-    if(result.blackPegs == 0 && result.whitePegs == 0) output += "NONE";
+    if(result.blackPegs == 0 && result.whitePegs == 0) output += "<b>NONE</b>";
 
     for (let i = 0; i < result.blackPegs; i++) {
         output += `<span class="dot" id="black"></span>`;

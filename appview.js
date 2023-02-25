@@ -10,7 +10,7 @@ function appView() {
         <button id="purple" onclick="addColour(this.id)">Purple</button>
         <button id="orange" onclick="addColour(this.id)">Orange</button>
     </p>
-    <p>Attempts left: ${attemptsLeft}</p>
+    <p><b>Attempts left: ${attemptsLeft}</b></p>
     ${outputColours()}
     `;
 
