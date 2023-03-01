@@ -3,6 +3,11 @@ function view() { // Main interface to respond to user's clicks
     let html = /*html*/`
     <h1>Mastermind</h1>
     <p>
+        Guess the four colour code! The code maker will give you a hint for every guess.<br />
+        A black dot means your last guess has a correct colour in the correct place.<br />
+        A white dot indicates there is a correct colour in the wrong place.
+    </p>
+    <p>
         <button id="red" onclick="addColour(this.id)">Red</button>
         <button id="green" onclick="addColour(this.id)">Green</button>
         <button id="blue" onclick="addColour(this.id)">Blue</button>

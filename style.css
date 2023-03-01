@@ -2,6 +2,7 @@ body {
     background-color: darkgray;
     color: black;
     text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 button {
