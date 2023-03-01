@@ -1,5 +1,5 @@
-appView();
-function appView() {
+view();
+function view() { // Main interface to respond to user's clicks
     let html = /*html*/`
     <h1>Mastermind</h1>
     <p>
@@ -11,17 +11,23 @@ function appView() {
         <button id="orange" onclick="addColour(this.id)">Orange</button>
     </p>
     <p><b>Attempts left: ${attemptsLeft}</b></p>
-    ${outputColours()}
+    <p>${output}</p>
     `;
 
     app.innerHTML = html;
 }
 
-function outputColours() {
-    let output = "";
-    for (let i = 0; i < selectedColours.length; i++) {
-        output += `<span class="dot" id="${selectedColours[i]}"></span>`;
-        if (i % 4 == 3) output += "<br />";
+function outputBlackWhiteDots(fourLast) { // Handle this separately
+    output += " ";
+
+    for (let i = 0; i < result.blackPegs; i++) {
+        output += `<span class="dot" id="black"></span>`;
     }
-    return output;
+
+    for (let i = 0; i < result.whitePegs; i++) {
+        output += `<span class="dot" id="white"></span>`;
+    }
+
+    output += "<br />";
+    view();
 }

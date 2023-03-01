@@ -1,3 +1,4 @@
+// Random four-colour code
 generateSecretCode();
 function generateSecretCode(){
     const code = [];
@@ -8,24 +9,53 @@ function generateSecretCode(){
     secretCode = code;
 }
 
+// Keeping track of user behaviour
 function addColour(colour) {
     clicks++;
-    selectedColours.push(colour);
-    appView();
-    if(clicks % 4 == 0) {
+    selectedColours.push(colour); // Tracking clicks
+    lastSelected = colour;
+    outputArray.push(`<span class="dot" id=${colour}></span>`); // Store the HTML for coloured dots
+    output += outputArray[outputArray.length-1];
+    view();
+    if(clicks % 4 == 0) { // Code to obtain the last four clicks
         attemptsLeft--;
-        appView();
         const guess = selectedColours.slice(Math.max(selectedColours.length - 4, 0));
         checkGuess(guess, secretCode);
-        pegsView();
-    } 
-}
+    }
+} 
 
 function checkGuess(guess, secretCode) {
+
+    // See whether game is won, whether any attempts are left
+    checkGameStatus(guess, secretCode);
 
     result.blackPegs = 0;
     result.whitePegs = 0;
 
+    const secretCodeCopy = [...secretCode];
+
+    // User gets a black peg for every correct colour in the correct position.
+    for (let i = 0; i < guess.length; i++) {
+        if (guess[i] === secretCode[i]) {
+            result.blackPegs++;
+            secretCodeCopy[i] = null;
+        }
+    }
+
+    // User gets a white peg for every correct colour in an incorrect position.
+    for (let i = 0; i < guess.length; i++) {
+        const index = secretCodeCopy.indexOf(guess[i]);
+        if (index !== -1) {
+            result.whitePegs++;
+            secretCodeCopy[index] = null;
+        }
+    }
+
+    fourLast = guess;
+    outputBlackWhiteDots(fourLast);
+}
+
+function checkGameStatus(guess, secretCode){
     if (JSON.stringify(guess) === JSON.stringify(secretCode)) {
         alert("You guessed the code!");
         location.reload();
@@ -34,22 +64,5 @@ function checkGuess(guess, secretCode) {
     else if (attemptsLeft == 0) {
         alert(`Game over! The code was ${secretCode}.`);
         location.reload();
-    }
-
-    const secretCodeCopy = [...secretCode];
-
-    for (let i = 0; i < guess.length; i++) {
-        if (guess[i] === secretCode[i]) {
-            result.blackPegs++;
-            secretCodeCopy[i] = null;
-        }
-    }
-
-    for (let i = 0; i < guess.length; i++) {
-        const index = secretCodeCopy.indexOf(guess[i]);
-        if (index !== -1) {
-            result.whitePegs++;
-            secretCodeCopy[index] = null;
-        }
     }
 }
