@@ -29,30 +29,39 @@ function checkGuess(guess, secretCode) {
     // See whether game is won, whether any attempts are left
     checkGameStatus(guess, secretCode);
 
+    // Working out how many pegs to award, taking duplicates into account
+    const guessCounts = getCounts(guess);
+    const secretCodeCounts = getCounts(secretCode);
+
     result.blackPegs = 0;
     result.whitePegs = 0;
 
-    const secretCodeCopy = [...secretCode];
-
-    // User gets a black peg for every correct colour in the correct position.
     for (let i = 0; i < guess.length; i++) {
         if (guess[i] === secretCode[i]) {
             result.blackPegs++;
-            secretCodeCopy[i] = null;
+            guessCounts[guess[i]]--;
+            secretCodeCounts[secretCode[i]]--;
         }
     }
 
-    // User gets a white peg for every correct colour in an incorrect position.
-    for (let i = 0; i < guess.length; i++) {
-        const index = secretCodeCopy.indexOf(guess[i]);
-        if (index !== -1) {
-            result.whitePegs++;
-            secretCodeCopy[index] = null;
-        }
+    for (let colour in guessCounts) {
+        result.whitePegs += Math.min(guessCounts[colour], secretCodeCounts[colour])
     }
+
+    result.whitePegs -= result.blackPegs;
 
     fourLast = guess;
     outputBlackWhiteDots(fourLast);
+}
+
+function getCounts(arr)
+{
+    const counts = {};
+    for (let i = 0; i < arr.length; i++) {
+        const colour = arr[i];
+        counts[colour] = (counts[colour] || 0) + 1;
+    }
+    return counts;
 }
 
 function checkGameStatus(guess, secretCode){
